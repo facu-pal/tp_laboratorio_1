@@ -514,41 +514,76 @@ int controller_saveAsBinary(char* path , LinkedList* pArrayListEmployee)
 	return retorno;
 }
 
-
-int controller_testTP(LinkedList* pArrayListEmployee)
+/** \brief muestro como usaria las funciones que me faltan probar de la linkdelist.
+ *
+ * \return int devuelve 1 si funciono
+ *
+ */
+int controller_testTPSinParametros()
 {
-	int exito = 0;
+	system("cls");
+
+	int retorno = 0;
 	int contains;
 	LinkedList* clon;
+	int *num = NULL;
+	Employee *pAuxEmpleado = NULL;
+    LinkedList* listaEmpleados = ll_newLinkedList();
+	controller_loadFromText("dataTest.csv", listaEmpleados);
 
+	printf("Para este test vamos a usar un archivo llamado dataTest.csv con datos ya precargardos \n\n");
 
-	if(pArrayListEmployee!=NULL)
+	if(listaEmpleados!=NULL)
 	{
 		clon = ll_newLinkedList();
 
-		clon = ll_clone(pArrayListEmployee);
+		clon = ll_subList(listaEmpleados,50,60);
 
-		controller_ListEmployee(pArrayListEmployee);
+		controller_ListEmployee(clon);
 		printf("\nLista Clonada.\n");
 
-		contains = ll_containsAll(pArrayListEmployee,clon);
+		contains = ll_containsAll(clon,listaEmpleados);
 		if(contains == 1){
 			printf("\n Las 2 lista tienen los mismos elemento\n");
 		}else if(contains == 0){
 			printf("\n Las 2 lista no tienen los mismos elemento\n");
 		}
 
+		printf("\n\n         ll push\n");
+		pAuxEmpleado = employee_newParametros("1000", "pepe", "1000","10000");
+		ll_push(clon, 3, pAuxEmpleado);
+		controller_ListEmployee(clon);
 
-		printf("---Delete---");
-		if(ll_deleteLinkedList(clon)==0)
-		{
-			printf("Lista eliminada\n");
-		}	else	{
-			printf("Lista no eliminada");
+		printf("\n\n                 ll set\n");
+		pAuxEmpleado = employee_newParametros("999", "juan", "10210","112000");
+		ll_set(clon, 3, pAuxEmpleado);
+		controller_ListEmployee(clon);
+
+		num = (int*) ll_get(clon, 4);
+		printf("\n\nEl numero en el indice 4 es %d\n", *num);
+
+
+		printf("El %d esta en el indice %d\n", *num, ll_indexOf(clon, num));
+
+		num = (int*) ll_pop(clon, 5);
+
+		printf("Saco el numero que estaba en el indice 5.\n");
+
+
+		if (ll_clear(clon) == 0) {
+			printf("---Delete---\n");
+			if (ll_deleteLinkedList(clon) == 0) {
+				printf("Lista clonada eliminada\n");
+			} else {
+				printf("Lista no eliminada");
+			}
 		}
 
-		exito = 1;
+		retorno = 1;
 	}
 
-	return exito;
+	system("pause");
+	system("cls");
+
+	return retorno;
 }

@@ -24,7 +24,6 @@ int main()
 {
 	setbuf(stdout, NULL);
 	int option = 0;
-
     LinkedList* listaEmpleados = ll_newLinkedList();
 
     do {
@@ -67,7 +66,6 @@ int main()
 						printf("El archivo se llama 'dataBackUp.csv'\n");
 					}
 					controller_loadFromText("data.csv", listaEmpleados);
-
 				}
 				printf("\n \n ");
 				break;
@@ -142,11 +140,7 @@ int main()
 
 				break;
 			case 8:
-				if (ll_len(listaEmpleados) != 0) {
-				controller_testTP(listaEmpleados);
-				}else {
-					printf(	"No hay datos la lista para guardar, por favor ingrese datos\n");
-				}
+				 controller_testTPSinParametros();
 				break;
 			case 9:
 				printf("\n \n ");
